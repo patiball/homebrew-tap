@@ -14,3 +14,9 @@ brew upgrade --cask freetube
 ```
 
 Ręczne uruchomienie aktualizacji: zakładka Actions, przepływ „Aktualizacja FreeTube”, przycisk „Run workflow”.
+
+## Automatyczna aktualizacja na Macu
+
+Zadanie launchd `scripts/com.patiball.freetube-upgrade.plist` (kopia w `~/Library/LaunchAgents`) codziennie o 10:00
+uruchamia `scripts/upgrade-freetube.sh`. Skrypt odświeża tylko ten tap i aktualizuje tylko FreeTube.
+Gdy FreeTube jest uruchomiony, aktualizacja czeka do następnego dnia. Log: `~/Library/Logs/freetube-upgrade.log`.
