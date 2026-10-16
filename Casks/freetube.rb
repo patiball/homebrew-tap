@@ -10,15 +10,17 @@ cask "freetube" do
   desc "YouTube player focusing on privacy"
   homepage "https://freetubeapp.io/"
 
-  depends_on macos: ">= :monterey"
+  depends_on macos: :monterey
 
   app "FreeTube.app"
 
   # FreeTube nie ma podpisu Apple Developer ID ani notaryzacji,
   # więc bez zdjęcia kwarantanny Gatekeeper blokuje uruchomienie.
-  postflight do
-    system_command "/usr/bin/xattr",
-                   args: ["-dr", "com.apple.quarantine", "#{appdir}/FreeTube.app"]
+  postflight_steps do
+    run "/usr/bin/xattr",
+        args:           ["-dr", "com.apple.quarantine", "{{appdir}}/FreeTube.app"],
+        writable_paths: ["FreeTube.app"],
+        writable_base:  :appdir
   end
 
   uninstall quit: "io.freetubeapp.freetube"
